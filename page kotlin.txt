@@ -1,0 +1,54 @@
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.os.CountDownTimer
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.IntegerRes
+
+class MainActivity : AppCompatActivity() {
+    var default_time:Long = 25 * 60 * 1000
+    lateinit var text_timer:TextView
+    lateinit var btn_start:TextView
+    lateinit var btn_reset:TextView
+    lateinit var utilisateur_time:EditText
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        text_timer = findViewById(R.id.text_timer)
+        btn_start = findViewById(R.id.btn_start)
+        btn_reset = findViewById(R.id.btn_reset)
+        utilisateur_time = findViewById(R.id.your_time)
+
+
+
+
+        btn_start.setOnClickListener{
+
+
+            val countDown = object :CountDownTimer(default_time,1000){
+                override fun onTick(time: Long) {
+                    default_time = time
+                    timeFormate()
+                }
+
+                override fun onFinish() {
+                    text_timer.setText("time is\nfinish")
+                }
+
+            }.start()
+        }
+
+
+
+    }
+    fun timeFormate(){
+        var minute = default_time / 1000 / 60
+        var second = default_time / 1000 % 60
+        var formatTime = String.format("%02d:%02d",minute,second)
+        text_timer.setText(formatTime)
+    }
+}
